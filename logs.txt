@@ -1,0 +1,5 @@
+model:<class 'src.model_processors.T5ModelProcessor'>; metric:calculate_UDM; result:0.8738642334938049; eval_time:4.350633144378662.
+model:<class 'src.model_processors.T5ModelProcessor'>; metric:calculate_PAR; result:0.10143023729324341; eval_time:294.33760833740234.
+model:<class 'src.model_processors.T5ModelProcessor'>; metric:calculate_UDM;                     result:0.8738642334938049; eval_time:5.390178918838501.
+model:<class 'src.model_processors.T5ModelProcessor'>; metric:calculate_UDM;                     result:0.8738642334938049; eval_time:5.269915819168091.
+model:<class 'src.model_processors.T5ModelProcessor'>; metric:calculate_UDM;                     result:0.8738642334938049; eval_time:5.410250425338745.
