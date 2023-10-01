@@ -11,9 +11,11 @@ from src.model_processors import AbstractModelProcesssor
 from .utils import get_cosine_sim
 
 
+MAX_VALUE = int(1e9)
+
 '''
 '''
-def calculate_UDM(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=1e9):
+def calculate_UDM(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=MAX_VALUE):
     results = []
     
     for i in tqdm(range(min(len(dataset_processor), k))):
@@ -27,7 +29,7 @@ def calculate_UDM(model_processor: AbstractModelProcesssor, dataset_processor: A
 
 '''
 '''
-def calculate_PAR(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=1e9):
+def calculate_PAR(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=MAX_VALUE):
     results = []
     
     for i in tqdm(range(min(len(dataset_processor), k))):
@@ -43,7 +45,7 @@ def calculate_PAR(model_processor: AbstractModelProcesssor, dataset_processor: A
 
 '''
 '''
-def calculate_SUM(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=1e9):
+def calculate_SUM(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=MAX_VALUE):
     results = []
     
     for i in tqdm(range(min(len(dataset_processor), k))):
@@ -57,13 +59,13 @@ def calculate_SUM(model_processor: AbstractModelProcesssor, dataset_processor: A
 
 '''
 '''
-def calculate_TOX(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=1e9):
+def calculate_TOX(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=MAX_VALUE):
     results = []
     labels = np.array(dataset_processor.get_labels())
     
     for i in tqdm(range(min(len(dataset_processor), k))):
         sentences = model_processor.get_sentences(dataset_processor, i)
-        embeddings = model_processor.get_embeddings(sentences)
+        embeddings = model_processor.get_embeddings([sentences])
         results.append(embeddings.flatten().cpu().detach().numpy())
         
     X = np.array(results)
@@ -106,14 +108,16 @@ def calculate_TOX(model_processor: AbstractModelProcesssor, dataset_processor: A
 
 '''
 '''
-def calculate_MGP(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=1e9):
+def calculate_MGP(model_processor: AbstractModelProcesssor, dataset_processor: AbstractDatasetProcessor, k: int=MAX_VALUE):
     
     results = []
-    labels = dataset_processor.get_labels()
+    labels = np.array(dataset_processor.get_labels())
+    
+    print(k)
     
     for i in tqdm(range(min(len(dataset_processor), k))):
         sentences = model_processor.get_sentences(dataset_processor, i)
-        embeddings = model_processor.get_embeddings(sentences)
+        embeddings = model_processor.get_embeddings([sentences])
         results.append(embeddings.flatten().cpu().detach().numpy())
         
         

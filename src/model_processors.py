@@ -1,6 +1,6 @@
 from abc import abstractmethod
 import numpy as np
-
+import torch
 from .utils import average_pool
 
 class AbstractModelProcesssor:
@@ -15,7 +15,7 @@ class AbstractModelProcesssor:
     def get_sentences(self, dataset_processor, i):
         sample = dataset_processor.get_sample(i)
         if 'text_2' in sample.keys():
-            sentences = sample['text_1'], sample['text_2']
+            sentences = [sample['text_1'], sample['text_2']]
         else:
             sentences = sample['text_1']
         return sentences
@@ -72,12 +72,12 @@ class LabseModelProcessor(AbstractModelProcesssor):
 '''
 '''
 class MinilmModelProcessor(AbstractModelProcesssor):  
-    def __init__(self, model, device):
+    def __init__(self, model, tokenizer=None, device=None):
         model.to(device)
         self.__model = model
         self.device = device
         
-    def get_embeddings(self, sentences, device):
+    def get_embeddings(self, sentences):
         embeddings = self.__model.encode(sentences, device=self.device)
         embeddings = torch.tensor(embeddings)
         return embeddings
@@ -85,7 +85,7 @@ class MinilmModelProcessor(AbstractModelProcesssor):
 '''
 '''
 class InstructorModelProcessor(AbstractModelProcesssor):
-    def __init__(self, model, device):
+    def __init__(self, model, tokenizer=None, device=None):
         model.to(device)
         self.__model = model
         self.device = device
@@ -99,7 +99,7 @@ class InstructorModelProcessor(AbstractModelProcesssor):
 '''
 '''
 class GloveModelProcessor(AbstractModelProcesssor):
-    def __init__(self, model):
+    def __init__(self, model, tokenizer=None, device=None):
         self.__model = model
         
     def get_embeddings(self, sentences):
