@@ -13,7 +13,7 @@ from src.data_processors import *
 from src.model_processors import *
 from src.metrics import *
 
-DEVICE = 'cuda:1' if torch.cuda.is_available() else 'cpu'
+DEVICE = 'cuda' if torch.cuda.is_available() else 'cpu'
 print(f'Using {DEVICE}')
 
 # Можно изменять порядок и добавлять модели с иным числом весов
