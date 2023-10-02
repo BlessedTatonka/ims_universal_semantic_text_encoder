@@ -120,4 +120,4 @@ $UPS = \frac{\frac{UDM + SUM}{2} \cdot PAR}{\frac{UDM + SUM}{2} + PAR}$.
 1. pip install -r requirements.txt
 2. Скачать все датасеты в папку data
 3. Установить библиотеку [InstructOR](https://github.com/xlang-ai/instructor-embedding)
-4. python3 run.py
+4. python3 run.py all_models all_metrics
